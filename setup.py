@@ -29,4 +29,9 @@ setuptools.setup(
     url='https://github.com/goneri/dci-orm',
     license='Apache v2.0',
     packages=['dci_orm'],
+    install_requires=[
+        'sqlalchemy',
+        'psycopg2',
+        'psycopg2-binary',
+    ],
 )
