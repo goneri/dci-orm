@@ -56,13 +56,13 @@ class ORM(object):
         # NOTE(Gonéri): Create the foreign table attribue to be able to
         # do job.remoteci.name
         for table in self.metadata.tables:
-            print('* %s' % table)
+            # print('* %s' % table)
             try:
                 cur_db = getattr(self.base.classes, table)
             except AttributeError:
                 continue
             for column in cur_db.__table__.columns:
-                print('  - "%s"' % column)
+                # print('  - "%s"' % column)
                 if str(column) == 'topics.next_topic_id':
                     foreign_table_name = 'topic'
                     '->'
@@ -85,7 +85,7 @@ class ORM(object):
                     if not m:
                         continue
                     foreign_table_name = m.group(1)
-                print('      fk table name: %s' % foreign_table_name)
+                # print('      fk table name: %s' % foreign_table_name)
 
                 foreign_table_object = getattr(
                     self.base.classes, foreign_table_name + 's')
