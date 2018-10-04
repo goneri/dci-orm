@@ -15,6 +15,7 @@
 # under the License.
 
 import re
+import warnings
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -26,6 +27,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
 from sqlalchemy.orm import Session
+from sqlalchemy import exc as sa_exc
 
 
 class ORM(object):
@@ -33,6 +35,11 @@ class ORM(object):
     def __init__(self, db_uri="postgresql+psycopg2://dci:dci@localhost/dci"):
         self.engine = create_engine(db_uri, pool_size=20, max_overflow=0,
                                     encoding='utf8', convert_unicode=True)
+
+
+        # reflect() will raise a warning because one of the index use a
+        # postgresql_where
+        warnings.simplefilter("ignore", category=sa_exc.SAWarning)
 
         self.session = Session(self.engine)
         self.metadata = MetaData()
